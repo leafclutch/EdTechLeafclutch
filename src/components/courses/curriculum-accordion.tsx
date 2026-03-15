@@ -26,8 +26,7 @@ export function CurriculumAccordion({ sections }: { sections: Section[] }) {
       setActiveIndexes(new Set(sections.map((_, i) => i)));
     }
   };
-
-  const totalLectures = sections.reduce((acc, s) => acc + s.lectures.length, 0);
+const totalLectures = sections.reduce((acc, s) => acc + s.lectures.length, 0);
 
   return (
     <div className="curriculum-accordion-wrapper">

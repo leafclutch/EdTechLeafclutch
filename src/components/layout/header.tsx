@@ -6,7 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const courseDropdown = [
-  { href: "/courses", label: "All Courses" },
+  { href: "/courses", label: "All Programs" },
   { href: "/courses/ai-ml", label: "AI & Machine Learning" },
   { href: "/courses/web-dev", label: "Web Development" },
   { href: "/courses/cybersecurity", label: "Cybersecurity" },
@@ -18,7 +18,11 @@ const courseDropdown = [
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
-  { href: "/courses", label: "Courses", dropdown: courseDropdown },
+  {
+    href: "/courses",
+    label: "Training & Internship",
+    dropdown: courseDropdown,
+  },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];
@@ -35,10 +39,7 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    setMobileOpen(false);
-    setMobileDropdown(false);
-  }, [pathname]);
+  // Removed effect that synchronously sets state on pathname change
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -168,7 +169,10 @@ export function Header() {
                         key={item.href}
                         href={item.href}
                         className={`mobile-dropdown-link ${isActive(item.href) ? "active" : ""}`}
-                        onClick={() => setMobileOpen(false)}
+                        onClick={() => {
+                          setMobileOpen(false);
+                          setMobileDropdown(false);
+                        }}
                       >
                         <i className="fas fa-chevron-right" />
                         {item.label}
@@ -180,7 +184,10 @@ export function Header() {
                 <Link
                   href={link.href}
                   className={`mobile-nav-link ${isActive(link.href) ? "active" : ""}`}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={() => {
+                    setMobileOpen(false);
+                    setMobileDropdown(false);
+                  }}
                 >
                   {link.label}
                 </Link>
@@ -193,14 +200,20 @@ export function Header() {
           <Link
             href="/contact"
             className="btn btn-outline-dark btn-block"
-            onClick={() => setMobileOpen(false)}
+            onClick={() => {
+              setMobileOpen(false);
+              setMobileDropdown(false);
+            }}
           >
             Get in Touch
           </Link>
           <Link
             href="/courses"
             className="btn btn-primary btn-block"
-            onClick={() => setMobileOpen(false)}
+            onClick={() => {
+              setMobileOpen(false);
+              setMobileDropdown(false);
+            }}
           >
             Explore Courses
           </Link>

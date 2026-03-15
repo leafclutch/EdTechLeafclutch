@@ -269,7 +269,7 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: space-between;
 }
 
-.logo-img { height: 40px; width: auto; }
+.logo-img { height: 64px; width: auto; }
 
 /* Desktop nav */
 .nav-desktop {
@@ -1556,7 +1556,8 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 20px;
 }
 .footer-logo-img {
-  /* original logo colors on white bg */
+  height: 64px;
+  width: auto;
 }
 .footer-logo-icon {
   width: 44px;
