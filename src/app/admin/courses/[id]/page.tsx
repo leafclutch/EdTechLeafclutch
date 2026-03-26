@@ -1,4 +1,5 @@
-"use client";
+export const runtime = "edge";
+("use client");
 
 import { useEffect, useState, type FormEvent } from "react";
 import { useRouter, useParams } from "next/navigation";
@@ -369,9 +370,7 @@ export default function CourseEditorPage() {
       <div className="flex items-center justify-center py-20">
         <div className="text-center">
           <div className="w-10 h-10 border-3 border-(--color-primary)/20 border-t-(--color-primary) rounded-full animate-spin mx-auto mb-3" />
-          <p className="text-(--color-text) text-[14px]">
-            Loading course...
-          </p>
+          <p className="text-(--color-text) text-[14px]">Loading course...</p>
         </div>
       </div>
     );
@@ -491,9 +490,7 @@ export default function CourseEditorPage() {
                         ))}
                       </select>
                       <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none flex items-center gap-2">
-                        <i
-                          className={`${form.icon} text-(--color-primary)`}
-                        />
+                        <i className={`${form.icon} text-(--color-primary)`} />
                         <i className="fas fa-chevron-down text-[10px] text-gray-400" />
                       </div>
                     </div>
@@ -1109,9 +1106,7 @@ function Field({
         className="w-full px-3 py-2.5 rounded-xl border border-(--color-border) text-[13px] focus:border-(--color-primary) focus:ring-2 focus:ring-(--color-primary)/10 outline-none transition-all"
       />
       {hint && (
-        <p className="text-[11px] text-(--color-text-light) mt-1">
-          {hint}
-        </p>
+        <p className="text-[11px] text-(--color-text-light) mt-1">{hint}</p>
       )}
     </div>
   );
@@ -1148,9 +1143,7 @@ function TextArea({
         className="w-full px-3 py-2.5 rounded-xl border border-(--color-border) text-[13px] focus:border-(--color-primary) focus:ring-2 focus:ring-(--color-primary)/10 outline-none transition-all resize-y"
       />
       {hint && (
-        <p className="text-[11px] text-(--color-text-light) mt-1">
-          {hint}
-        </p>
+        <p className="text-[11px] text-(--color-text-light) mt-1">{hint}</p>
       )}
     </div>
   );

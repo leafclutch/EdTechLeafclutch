@@ -1,4 +1,5 @@
-"use client";
+export const runtime = "edge";
+("use client");
 
 import { useEffect, useState, type FormEvent } from "react";
 import { useRouter, useParams } from "next/navigation";
@@ -156,9 +157,7 @@ export default function BlogEditorPage() {
       <div className="flex items-center justify-center py-20">
         <div className="text-center">
           <div className="w-10 h-10 border-3 border-(--color-primary)/20 border-t-(--color-primary) rounded-full animate-spin mx-auto mb-3" />
-          <p className="text-(--color-text) text-[14px]">
-            Loading post...
-          </p>
+          <p className="text-(--color-text) text-[14px]">Loading post...</p>
         </div>
       </div>
     );
