@@ -1,6 +1,6 @@
-export const runtime = "edge";
 ("use client");
 
+export const runtime = "edge";
 import { useEffect, useState, type FormEvent } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { supabase } from "@/lib/supabase/client";
