@@ -1,4 +1,4 @@
-export const runtime = "edge";
+
 import type { Metadata } from "next";
 import { PageHero } from "@/components/ui/page-hero";
 import Link from "next/link";
