@@ -5,7 +5,7 @@ import { supabase } from "@/lib/supabase/client";
 import Link from "next/link";
 
 interface Stats {
-  courses: number;
+  programs: number;
   blogPosts: number;
   enrollments: number;
   contacts: number;
@@ -66,7 +66,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     async function loadData() {
       const [
-        courses,
+        programs,
         blog,
         enrollments,
         contacts,
@@ -97,7 +97,7 @@ export default function AdminDashboard() {
           .eq("status", "pending"),
       ]);
       setStats({
-        courses: courses.count ?? 0,
+        programs: programs.count ?? 0,
         blogPosts: blog.count ?? 0,
         enrollments: enrollments.count ?? 0,
         contacts: contacts.count ?? 0,
@@ -146,13 +146,13 @@ export default function AdminDashboard() {
   const cards = stats
     ? [
         {
-          label: "Total Courses",
-          value: stats.courses,
+          label: "Total Programs",
+          value: stats.programs,
           icon: "fa-graduation-cap",
           color: "from-blue-500 to-blue-600",
           lightBg: "bg-blue-50",
           lightText: "text-blue-600",
-          href: "/admin/courses",
+          href: "/admin/programs",
           description: "Training programs available",
         },
         {
@@ -269,8 +269,8 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {[
             {
-              label: "Add New Course",
-              href: "/admin/courses/new",
+              label: "Add New Program",
+              href: "/admin/programs/new",
               icon: "fa-plus-circle",
               description: "Create a training program",
               color: "text-blue-600 bg-blue-50",
@@ -290,11 +290,11 @@ export default function AdminDashboard() {
               color: "text-emerald-600 bg-emerald-50",
             },
             {
-              label: "Site Settings",
-              href: "/admin/settings",
-              icon: "fa-sliders",
-              description: "Update site configuration",
-              color: "text-gray-600 bg-gray-100",
+              label: "Manage Pricing",
+              href: "/admin/pricing-plans",
+              icon: "fa-tags",
+              description: "Edit home pricing plans",
+              color: "text-blue-600 bg-blue-50",
             },
           ].map((action) => (
             <Link

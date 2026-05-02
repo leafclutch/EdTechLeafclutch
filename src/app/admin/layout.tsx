@@ -23,8 +23,8 @@ const navGroups = [
     label: "Content",
     items: [
       {
-        label: "Courses",
-        href: "/admin/courses",
+        label: "Programs",
+        href: "/admin/programs",
         icon: "fa-graduation-cap",
         description: "Training programs",
       },
@@ -39,6 +39,18 @@ const navGroups = [
         href: "/admin/testimonials",
         icon: "fa-quote-left",
         description: "Student reviews",
+      },
+      {
+        label: "Pricing Plans",
+        href: "/admin/pricing-plans",
+        icon: "fa-tags",
+        description: "Home pricing section",
+      },
+      {
+        label: "Paid Internships",
+        href: "/admin/paid-internships",
+        icon: "fa-money-bill-wave",
+        description: "Open internship roles",
       },
     ],
   },
@@ -80,11 +92,13 @@ function getBreadcrumbs(pathname: string) {
 
   const labels: Record<string, string> = {
     admin: "Dashboard",
-    courses: "Courses",
+    programs: "Programs",
     blog: "Blog Posts",
     enrollments: "Enrollments",
     contacts: "Messages",
     testimonials: "Testimonials",
+    "pricing-plans": "Pricing Plans",
+    "paid-internships": "Paid Internships",
     settings: "Settings",
     login: "Login",
     new: "Create New",

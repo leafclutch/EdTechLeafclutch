@@ -1,9 +1,9 @@
 export const runtime = "edge";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CurriculumAccordion } from "@/components/courses/curriculum-accordion";
+import { CurriculumAccordion } from "@/components/programs/curriculum-accordion";
 import { createPublicSupabase } from "@/lib/supabase/server";
-import type { Course } from "@/lib/supabase/types";
+import type { Program } from "@/lib/supabase/types";
 
 export const revalidate = 60;
 
@@ -24,14 +24,14 @@ function formatNPR(amount: number) {
   return `NPR ${amount.toLocaleString()}`;
 }
 
-async function getCourse(slug: string): Promise<Course | null> {
+async function getProgram(slug: string): Promise<Program | null> {
   const supabase = createPublicSupabase();
   const { data } = await supabase
     .from("courses")
     .select("*")
     .eq("slug", slug)
     .eq("is_published", true)
-    .single<Course>();
+    .single<Program>();
   return data;
 }
 
@@ -45,95 +45,120 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const course = await getCourse(slug);
-  if (!course) return { title: "Course Not Found" };
+  const program = await getProgram(slug);
+  if (!program) return { title: "Program Not Found" };
   return {
-    title: `${course.title} Course \u2014 IT Training in Bhairahawa & Butwal, Nepal`,
-    description: `${course.description} Enroll in our ${course.title} training & internship program at Leafclutch Technologies, Bhairahawa, Nepal. ${course.level} level. Price: ${formatNPR(course.price)}.`,
+    title: `${program.title} Program \u2014 IT Training in Bhairahawa & Butwal, Nepal`,
+    description: `${program.description} Enroll in our ${program.title} training & internship program at Leafclutch Technologies, Bhairahawa, Nepal. ${program.level} level. Price: ${formatNPR(program.price)}.`,
     keywords: [
-      `${course.title} course Nepal`,
-      `${course.title} training Bhairahawa`,
-      `${course.title} internship Butwal`,
-      `learn ${course.title} Nepal`,
+      `${program.title} program Nepal`,
+      `${program.title} training Bhairahawa`,
+      `${program.title} internship Butwal`,
+      `learn ${program.title} Nepal`,
       "IT training Nepal",
       "Leafclutch Technologies",
     ],
     openGraph: {
-      title: `${course.title} Course | Leafclutch Technologies Nepal`,
-      description: course.description,
-      url: `https://leafclutchtech.com.np/courses/${course.slug}`,
+      title: `${program.title} Program | Leafclutch Technologies Nepal`,
+      description: program.description,
+      url: `https://leafclutchtech.com.np/programs/${program.slug}`,
       images: [
         {
-          url: course.image_url,
+          url: program.image_url,
           width: 700,
           height: 500,
-          alt: course.title,
+          alt: program.title,
         },
       ],
     },
     alternates: {
-      canonical: `https://leafclutchtech.com.np/courses/${course.slug}`,
+      canonical: `https://leafclutchtech.com.np/programs/${program.slug}`,
     },
   };
 }
 
-export default async function CourseDetailPage({
+export default async function ProgramDetailPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const course = await getCourse(slug);
-  if (!course) notFound();
+  const program = await getProgram(slug);
+  if (!program) notFound();
 
   const requirements =
-    (course.requirements as unknown as RequirementSection[]) ?? [];
-  const curriculum = (course.curriculum as unknown as CurriculumModule[]) ?? [];
+    (program.requirements as unknown as RequirementSection[]) ?? [];
+  const curriculum = (program.curriculum as unknown as CurriculumModule[]) ?? [];
   const outcomes =
-    (course.learning_outcomes as unknown as LearningOutcome[]) ?? [];
+    (program.learning_outcomes as unknown as LearningOutcome[]) ?? [];
   const whatsappText = encodeURIComponent(
-    `Hi! I'm interested in the ${course.title} course.`,
+    `Hi! I'm interested in the ${program.title} program.`,
   );
+  const onlinePrice = program.price_online ?? program.price;
+  const onsitePrice = program.price_onsite ?? program.price;
+  const isPaid = program.program_type === "paid_internship";
+  const hasDualPrice = onlinePrice !== onsitePrice;
 
   return (
     <>
-      {/* Course Hero */}
-      <section className="course-page-hero">
+      {/* Program Hero */}
+      <section className="program-page-hero">
         <div className="container">
-          <div className="course-hero-grid">
-            <div className="course-hero-content">
-              <span className="section-badge">{course.badge}</span>
-              <h1 className="course-hero-title">{course.title}</h1>
-              <p className="course-hero-desc">{course.hero_description}</p>
-              <div className="course-hero-meta">
-                <div className="course-hero-meta-item">
-                  <i className="fas fa-clock"></i> {course.duration}
+          <div className="program-hero-grid">
+            <div className="program-hero-content">
+              <div className="program-hero-badges">
+                <span className="section-badge">{program.badge}</span>
+                {isPaid && (
+                  <span className="program-type-badge program-type-badge--paid">
+                    <i className="fas fa-money-bill-wave" /> Paid Internship
+                  </span>
+                )}
+              </div>
+              <h1 className="program-hero-title">{program.title}</h1>
+              <p className="program-hero-desc">{program.hero_description}</p>
+              <div className="program-hero-meta">
+                <div className="program-hero-meta-item">
+                  <i className="fas fa-clock" /> {program.duration}
                 </div>
-                <div className="course-hero-meta-item">
-                  <i className="fas fa-signal"></i> {course.level}
+                <div className="program-hero-meta-item">
+                  <i className="fas fa-signal" /> {program.level}
                 </div>
-                <div className="course-hero-meta-item">
-                  <i className="fas fa-laptop-house"></i> {course.mode}
+                <div className="program-hero-meta-item">
+                  <i className="fas fa-laptop-house" /> {program.mode}
                 </div>
-                <div className="course-hero-meta-item">
-                  <i className="fas fa-certificate"></i> Certificate Included
+                <div className="program-hero-meta-item">
+                  <i className="fas fa-certificate" /> Certificate Included
                 </div>
               </div>
-              <div className="course-hero-pricing">
-                <div className="course-hero-price">
-                  {formatNPR(course.price)} <span>Total Fee</span>
-                </div>
-                <div className="course-hero-enroll-price">
+              <div className="program-hero-pricing">
+                {hasDualPrice ? (
+                  <div className="program-hero-dual-price">
+                    <div className="program-hero-price-mode">
+                      <span className="price-mode-label"><i className="fas fa-laptop" /> Online</span>
+                      <span className="price-mode-value">{formatNPR(onlinePrice)}</span>
+                    </div>
+                    <div className="price-mode-sep" />
+                    <div className="program-hero-price-mode">
+                      <span className="price-mode-label"><i className="fas fa-building" /> On-Site</span>
+                      <span className="price-mode-value">{formatNPR(onsitePrice)}</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="program-hero-price">
+                    {formatNPR(onlinePrice)} <span>Total Fee</span>
+                  </div>
+                )}
+                <div className="program-hero-enroll-price">
                   Enroll with just{" "}
-                  <strong>{formatNPR(course.initial_fee)}</strong>
+                  <strong>{formatNPR(program.initial_fee)}</strong>
                 </div>
-                <div className="course-hero-installment">
+                <div className="program-hero-installment">
                   Remaining fee payable in 5 easy installments
                 </div>
               </div>
-              <div className="course-hero-buttons">
+              <div className="program-hero-buttons">
                 <Link
-                  href={`/enroll?course=${encodeURIComponent(course.title)}`}
+                  href={`/enroll?program=${encodeURIComponent(program.title)}`}
                   className="btn btn-primary"
                 >
                   Enroll Now <i className="fas fa-arrow-right"></i>
@@ -148,10 +173,10 @@ export default async function CourseDetailPage({
                 </a>
               </div>
             </div>
-            <div className="course-hero-image">
+            <div className="program-hero-image">
               <img
-                src={course.image_url}
-                alt={`${course.title} course at Leafclutch Technologies`}
+                src={program.image_url}
+                alt={`${program.title} program at Leafclutch Technologies`}
               />
             </div>
           </div>
@@ -159,9 +184,9 @@ export default async function CourseDetailPage({
       </section>
 
       {/* Requirements */}
-      <section className="course-section">
+      <section className="program-section">
         <div className="container">
-          <div className="course-section-header">
+          <div className="program-section-header">
             <span className="section-badge">REQUIREMENTS</span>
             <h2 className="section-title">What You Need to Get Started</h2>
             <p className="section-desc">
@@ -195,37 +220,37 @@ export default async function CourseDetailPage({
       </section>
 
       {/* Curriculum */}
-      <section className="course-section">
+      <section className="program-section">
         <div className="container">
-          <div className="course-section-header">
+          <div className="program-section-header">
             <span className="section-badge">CURRICULUM</span>
-            <h2 className="section-title">Course Content</h2>
-            <p className="section-desc">{course.description}</p>
+            <h2 className="section-title">Program Content</h2>
+            <p className="section-desc">{program.description}</p>
           </div>
           <CurriculumAccordion sections={curriculum} />
 
           {/* Recommended Udemy Course */}
-          {course.udemy_title && (
-            <div className="recommended-course-card">
-              <div className="recommended-course-icon">
+          {program.udemy_title && (
+            <div className="recommended-program-card">
+              <div className="recommended-program-icon">
                 <i className="fas fa-graduation-cap"></i>
               </div>
-              <div className="recommended-course-content">
-                <div className="recommended-course-label">
+              <div className="recommended-program-content">
+                <div className="recommended-program-label">
                   Recommended Udemy Course
                 </div>
-                <div className="recommended-course-title">
-                  {course.udemy_title}
+                <div className="recommended-program-title">
+                  {program.udemy_title}
                 </div>
-                <p className="recommended-course-note">
-                  We recommend this course for our training. If you prefer a
+                <p className="recommended-program-note">
+                  We recommend this for our training. If you prefer a
                   different Udemy course, let us know — we&apos;ll provide that
                   one instead.
                 </p>
               </div>
               <a
-                href={course.udemy_url}
-                className="recommended-course-link"
+                href={program.udemy_url}
+                className="recommended-program-link"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -237,9 +262,9 @@ export default async function CourseDetailPage({
       </section>
 
       {/* Learning Outcomes */}
-      <section className="course-section">
+      <section className="program-section">
         <div className="container">
-          <div className="course-section-header">
+          <div className="program-section-header">
             <span className="section-badge">OUTCOMES</span>
             <h2 className="section-title">What You&apos;ll Be Able to Do</h2>
           </div>

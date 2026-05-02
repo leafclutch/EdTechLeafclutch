@@ -11,7 +11,7 @@ export function AboutSection() {
               Build Skills. Gain Experience. Get Industry-Ready.
             </h2>
             <p className="section-desc">
-              Our 3-month Courses &amp; Internship Program is designed to
+              Our 3-month Training &amp; Internship Program is designed to
               transform beginners into industry-ready professionals. Month 1
               focuses on intensive hands-on training with expert mentors,
               followed by 2 months of real-world internship where you work on

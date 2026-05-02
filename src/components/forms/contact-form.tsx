@@ -7,7 +7,7 @@ interface ContactFormData {
   fullName: string;
   email: string;
   phone: string;
-  course: string;
+  program: string;
 }
 
 export function ContactForm() {
@@ -15,7 +15,7 @@ export function ContactForm() {
     fullName: "",
     email: "",
     phone: "",
-    course: "",
+    program: "",
   });
   const [countryCode, setCountryCode] = useState("+977");
   const [status, setStatus] = useState<
@@ -31,14 +31,14 @@ export function ContactForm() {
     if (!validateForm()) return;
     setStatus("sending");
 
-    const subject = form.course
-      ? `Course Inquiry: ${form.course}`
+    const subject = form.program
+      ? `Program Inquiry: ${form.program}`
       : "New Contact Form Message";
     const body = [
       `Name: ${form.fullName}`,
       `Email: ${form.email}`,
       `Phone: ${countryCode}-${form.phone}`,
-      form.course ? `Course Interested In: ${form.course}` : null,
+      form.program ? `Program Interested In: ${form.program}` : null,
     ]
       .filter((l) => l !== null)
       .join("\n");
@@ -58,7 +58,7 @@ export function ContactForm() {
       `*Name:* ${form.fullName}`,
       `*Email:* ${form.email}`,
       form.phone ? `*Phone:* ${countryCode}-${form.phone}` : null,
-      form.course ? `*Course Interested In:* ${form.course}` : null,
+      form.program ? `*Program Interested In:* ${form.program}` : null,
     ]
       .filter((l) => l !== null)
       .join("\n");
@@ -83,7 +83,7 @@ export function ContactForm() {
         <button
           onClick={() => {
             setStatus("idle");
-            setForm({ fullName: "", email: "", phone: "", course: "" });
+            setForm({ fullName: "", email: "", phone: "", program: "" });
           }}
           className="contact-reset-btn"
         >
@@ -136,13 +136,13 @@ export function ContactForm() {
       </div>
 
       <div className="contact-form-group">
-        <label htmlFor="course">COURSE INTERESTED IN</label>
+        <label htmlFor="program">PROGRAM INTERESTED IN</label>
         <select
-          id="course"
-          value={form.course}
-          onChange={(e) => setForm((p) => ({ ...p, course: e.target.value }))}
+          id="program"
+          value={form.program}
+          onChange={(e) => setForm((p) => ({ ...p, program: e.target.value }))}
         >
-          <option value="">Select a course</option>
+          <option value="">Select a program</option>
           <option value="AI & Machine Learning">AI & Machine Learning</option>
           <option value="Web Development">Web Development</option>
           <option value="Cybersecurity">Cybersecurity</option>

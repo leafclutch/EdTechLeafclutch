@@ -36,6 +36,9 @@ export interface Database {
           sort_order: number;
           is_featured: boolean;
           is_published: boolean;
+          price_online: number | null;
+          price_onsite: number | null;
+          program_type: string | null;
           created_at: string;
           updated_at: string;
         };
@@ -65,6 +68,9 @@ export interface Database {
           sort_order: number;
           is_featured: boolean;
           is_published: boolean;
+          price_online?: number | null;
+          price_onsite?: number | null;
+          program_type?: string | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -94,6 +100,9 @@ export interface Database {
           sort_order?: number;
           is_featured?: boolean;
           is_published?: boolean;
+          price_online?: number | null;
+          price_onsite?: number | null;
+          program_type?: string | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -156,6 +165,11 @@ export interface Database {
           reason: string;
           message: string | null;
           status: string;
+          enrollment_type: string | null;
+          delivery_mode: string | null;
+          github_url: string | null;
+          cv_url: string | null;
+          internship_role: string | null;
           created_at: string;
         };
         Insert: {
@@ -169,6 +183,11 @@ export interface Database {
           reason: string;
           message?: string | null;
           status?: string;
+          enrollment_type?: string | null;
+          delivery_mode?: string | null;
+          github_url?: string | null;
+          cv_url?: string | null;
+          internship_role?: string | null;
           created_at?: string;
         };
         Update: {
@@ -182,6 +201,11 @@ export interface Database {
           reason?: string;
           message?: string | null;
           status?: string;
+          enrollment_type?: string | null;
+          delivery_mode?: string | null;
+          github_url?: string | null;
+          cv_url?: string | null;
+          internship_role?: string | null;
           created_at?: string;
         };
         Relationships: [];
@@ -324,6 +348,57 @@ export interface Database {
         };
         Relationships: [];
       };
+      paid_internships: {
+        Row: {
+          id: string;
+          slug: string;
+          title: string;
+          description: string;
+          duration: string;
+          requirements: string[];
+          stipend: string;
+          mode: string;
+          skills_required: string[];
+          openings: number;
+          is_published: boolean;
+          sort_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          slug: string;
+          title: string;
+          description: string;
+          duration?: string;
+          requirements?: string[];
+          stipend?: string;
+          mode?: string;
+          skills_required?: string[];
+          openings?: number;
+          is_published?: boolean;
+          sort_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          slug?: string;
+          title?: string;
+          description?: string;
+          duration?: string;
+          requirements?: string[];
+          stipend?: string;
+          mode?: string;
+          skills_required?: string[];
+          openings?: number;
+          is_published?: boolean;
+          sort_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
@@ -333,10 +408,14 @@ export interface Database {
 }
 
 // Helper types
-export type Course = Database["public"]["Tables"]["courses"]["Row"];
+export type Program = Database["public"]["Tables"]["courses"]["Row"];
+/** @deprecated Use Program instead */
+export type Course = Program;
 export type BlogPost = Database["public"]["Tables"]["blog_posts"]["Row"];
 export type Enrollment = Database["public"]["Tables"]["enrollments"]["Row"];
 export type ContactMessage = Database["public"]["Tables"]["contact_messages"]["Row"];
 export type Testimonial = Database["public"]["Tables"]["testimonials"]["Row"];
 export type SiteSetting = Database["public"]["Tables"]["site_settings"]["Row"];
 export type PricingPlan = Database["public"]["Tables"]["pricing_plans"]["Row"];
+export type PaidInternship = Database["public"]["Tables"]["paid_internships"]["Row"];
+

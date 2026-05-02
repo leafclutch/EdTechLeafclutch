@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { HeroSection } from "@/components/sections/hero";
 import { AboutSection } from "@/components/sections/about-preview";
-import { CoursesSection } from "@/components/sections/courses-preview";
+import { ProgramsSection } from "@/components/sections/courses-preview";
 import { WhyUsSection } from "@/components/sections/why-us";
 import { PricingSection } from "@/components/sections/pricing";
 
@@ -34,7 +34,7 @@ export default function HomePage() {
     <>
       <HeroSection />
       <AboutSection />
-      <CoursesSection />
+      <ProgramsSection />
       <WhyUsSection />
       <PricingSection />
     </>

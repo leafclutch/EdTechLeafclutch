@@ -6,14 +6,14 @@ import { EnrollForm } from "@/components/enroll/enroll-form";
 export const metadata: Metadata = {
   title: "Enroll Now — Apply for IT Training & Internship in Nepal",
   description:
-    "Apply for Leafclutch Technologies training and internship programs in Bhairahawa & Butwal, Nepal. Enroll in AI, Web Development, Cybersecurity, UI/UX Design, Graphic Design, or Data Science courses. No prior experience needed.",
+    "Apply for Leafclutch Technologies training and internship programs in Bhairahawa & Butwal, Nepal. Enroll in AI, Web Development, Cybersecurity, UI/UX Design, Graphic Design, or Data Science programs. No prior experience needed.",
   keywords: [
     "enroll IT training Nepal",
     "apply internship Bhairahawa",
-    "tech course registration Butwal",
+    "tech program registration Butwal",
     "IT training enrollment Nepal",
     "Leafclutch enrollment",
-    "coding course apply Nepal",
+    "coding program apply Nepal",
     "internship application Bhairahawa",
   ],
   openGraph: {
@@ -33,68 +33,41 @@ export default function EnrollPage() {
         title="Enroll in a Program"
         breadcrumbs={[
           { label: "HOME", href: "/" },
-          { label: "COURSES", href: "/courses" },
+          { label: "PROGRAMS", href: "/programs" },
           { label: "ENROLL" },
         ]}
       />
 
       <section className="enroll-section">
         <div className="container">
-          <div className="enroll-grid">
-            <Suspense
-              fallback={
-                <div className="enroll-form-card">
-                  <p>Loading form...</p>
-                </div>
-              }
-            >
-              <EnrollForm />
-            </Suspense>
+          {/* Full-width type selector */}
+          <Suspense fallback={<div className="enroll-form-card"><p>Loading form...</p></div>}>
+            <EnrollForm />
+          </Suspense>
 
-            {/* Info Sidebar */}
-            <div className="enroll-info">
-              <div className="enroll-info-card">
-                <div className="enroll-info-icon">
-                  <i className="fas fa-clock"></i>
-                </div>
-                <h3>Quick Response</h3>
-                <p>
-                  We review applications within 24 hours and get back to you
-                  with next steps.
-                </p>
+          {/* Steps / trust bar */}
+          <div className="enroll-trust-bar">
+            <div className="enroll-trust-item">
+              <div className="enroll-trust-num">01</div>
+              <div>
+                <h4>Fill Application</h4>
+                <p>Complete the form with your details</p>
               </div>
-              <div className="enroll-info-card">
-                <div className="enroll-info-icon">
-                  <i className="fas fa-graduation-cap"></i>
-                </div>
-                <h3>Beginner Friendly</h3>
-                <p>
-                  No prior experience needed. Our programs are designed for
-                  absolute beginners.
-                </p>
+            </div>
+            <div className="enroll-trust-divider" />
+            <div className="enroll-trust-item">
+              <div className="enroll-trust-num">02</div>
+              <div>
+                <h4>Quick Review</h4>
+                <p>We respond within 24 hours</p>
               </div>
-              <div className="enroll-info-card">
-                <div className="enroll-info-icon">
-                  <i className="fas fa-certificate"></i>
-                </div>
-                <h3>Certificate Included</h3>
-                <p>
-                  Get an industry-recognized certificate upon successful
-                  completion.
-                </p>
-              </div>
-              <div className="enroll-info-card">
-                <div className="enroll-info-icon">
-                  <i className="fas fa-headset"></i>
-                </div>
-                <h3>Need Help?</h3>
-                <p>
-                  Contact us at{" "}
-                  <a href="mailto:careers@leafclutchtech.com.np">
-                    careers@leafclutchtech.com.np
-                  </a>{" "}
-                  or call <a href="tel:+9779766715768">+977-9766715768</a>
-                </p>
+            </div>
+            <div className="enroll-trust-divider" />
+            <div className="enroll-trust-item">
+              <div className="enroll-trust-num">03</div>
+              <div>
+                <h4>Start Learning</h4>
+                <p>Pay the initial fee & begin</p>
               </div>
             </div>
           </div>

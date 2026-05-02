@@ -89,7 +89,7 @@ export default function AboutPage() {
       {/* Program Timeline */}
       <section className="program-timeline-section">
         <div className="container">
-          <div className="course-section-header">
+          <div className="program-section-header">
             <span className="section-badge">PROGRAM STRUCTURE</span>
             <h2 className="section-title">Your 3-Month Roadmap</h2>
             <p className="section-desc">
@@ -291,7 +291,7 @@ export default function AboutPage() {
       {/* Tech Tracks */}
       <section className="about-mv-section">
         <div className="container">
-          <div className="course-section-header">
+          <div className="program-section-header">
             <span className="section-badge">CHOOSE YOUR PATH</span>
             <h2 className="section-title">6 In-Demand Tech Tracks</h2>
             <p className="section-desc">
@@ -299,7 +299,7 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="about-features-grid">
-            <Link href="/courses/ai-ml" className="track-card">
+            <Link href="/programs/ai-ml" className="track-card">
               <div className="track-card-icon">
                 <i className="fas fa-brain"></i>
               </div>
@@ -308,21 +308,21 @@ export default function AboutPage() {
                 Python, TensorFlow, deep learning, and real-world AI projects.
               </p>
             </Link>
-            <Link href="/courses/web-dev" className="track-card">
+            <Link href="/programs/web-dev" className="track-card">
               <div className="track-card-icon">
                 <i className="fas fa-code"></i>
               </div>
               <h3>Web Development</h3>
               <p>Full-stack MERN development with modern frameworks.</p>
             </Link>
-            <Link href="/courses/cybersecurity" className="track-card">
+            <Link href="/programs/cybersecurity" className="track-card">
               <div className="track-card-icon">
                 <i className="fas fa-shield-alt"></i>
               </div>
               <h3>Cybersecurity</h3>
               <p>Ethical hacking, penetration testing, and network security.</p>
             </Link>
-            <Link href="/courses/ui-ux" className="track-card">
+            <Link href="/programs/ui-ux" className="track-card">
               <div className="track-card-icon">
                 <i className="fas fa-palette"></i>
               </div>
@@ -331,7 +331,7 @@ export default function AboutPage() {
                 User research, Figma mastery, and portfolio-ready case studies.
               </p>
             </Link>
-            <Link href="/courses/graphic-design" className="track-card">
+            <Link href="/programs/graphic-design" className="track-card">
               <div className="track-card-icon">
                 <i className="fas fa-paint-brush"></i>
               </div>
@@ -340,7 +340,7 @@ export default function AboutPage() {
                 Adobe Photoshop, Illustrator, brand identity, and print design.
               </p>
             </Link>
-            <Link href="/courses/data-science" className="track-card">
+            <Link href="/programs/data-science" className="track-card">
               <div className="track-card-icon">
                 <i className="fas fa-chart-bar"></i>
               </div>
@@ -430,7 +430,7 @@ export default function AboutPage() {
       {/* Completion Perks */}
       <section className="completion-perks-section">
         <div className="container">
-          <div className="course-section-header">
+          <div className="program-section-header">
             <span className="section-badge">AFTER COMPLETION</span>
             <h2 className="section-title">What You Walk Away With</h2>
             <p className="section-desc">

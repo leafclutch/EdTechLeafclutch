@@ -15,6 +15,9 @@ export async function PricingSection() {
     .order("sort_order", { ascending: true })
     .returns<PricingPlan[]>();
 
+  // If no plans in DB, don't render the section
+  if (!plans || plans.length === 0) return null;
+
   return (
     <section className="membership" id="membership">
       <div className="container">
@@ -27,7 +30,7 @@ export async function PricingSection() {
           </p>
         </div>
         <div className="pricing-grid">
-          {(plans ?? []).map((plan) => (
+          {plans.map((plan) => (
             <div
               key={plan.id}
               className={`pricing-card${plan.is_featured ? " pricing-card--featured" : ""}`}
@@ -44,11 +47,11 @@ export async function PricingSection() {
                 <p className="pricing-plan-desc">
                   Enroll with just{" "}
                   <strong>{formatNPR(plan.initial_fee)}</strong> &middot; Choose
-                  any one course
+                  any one program
                 </p>
               </div>
               <div className="pricing-body">
-                <h4 className="pricing-benefit-title">Available Courses</h4>
+                <h4 className="pricing-benefit-title">Available Programs</h4>
                 <ul className="pricing-features">
                   {(plan.courses_included ?? []).map((c: string) => (
                     <li key={c}>

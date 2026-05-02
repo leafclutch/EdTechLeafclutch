@@ -103,7 +103,7 @@ export default function TermsOfServicePage() {
                 Treat instructors, mentors, and fellow participants with respect
               </li>
               <li>
-                Not share, redistribute, or sell course materials without
+                Not share, redistribute, or sell program materials without
                 written permission
               </li>
               <li>
@@ -133,7 +133,7 @@ export default function TermsOfServicePage() {
             <h2>7. Intellectual Property</h2>
             <p>
               All content on our website, including text, graphics, logos,
-              images, course materials, and software, is the property of
+              images, program materials, and software, is the property of
               Leafclutch Technologies Pvt. Ltd. and is protected by intellectual
               property laws. You may not reproduce, distribute, modify, or
               create derivative works from our content without express written

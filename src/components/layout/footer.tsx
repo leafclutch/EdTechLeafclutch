@@ -119,22 +119,22 @@ export async function Footer() {
               <h4>Programs</h4>
               <ul>
                 <li>
-                  <Link href="/courses">All Courses</Link>
+                  <Link href="/programs">All Programs</Link>
                 </li>
                 <li>
-                  <Link href="/courses/ai-ml">AI &amp; Machine Learning</Link>
+                  <Link href="/programs/ai-ml">AI &amp; Machine Learning</Link>
                 </li>
                 <li>
-                  <Link href="/courses/web-dev">Web Development</Link>
+                  <Link href="/programs/web-dev">Web Development</Link>
                 </li>
                 <li>
-                  <Link href="/courses/cybersecurity">Cybersecurity</Link>
+                  <Link href="/programs/cybersecurity">Cybersecurity</Link>
                 </li>
                 <li>
-                  <Link href="/courses/data-science">Data Science</Link>
+                  <Link href="/programs/data-science">Data Science</Link>
                 </li>
                 <li>
-                  <Link href="/courses/ui-ux">UI/UX Design</Link>
+                  <Link href="/programs/ui-ux">UI/UX Design</Link>
                 </li>
               </ul>
             </div>

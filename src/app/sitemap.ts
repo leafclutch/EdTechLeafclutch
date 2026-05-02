@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 const BASE_URL = "https://leafclutchtech.com.np";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const courses = [
+  const programs = [
     "ai-ml",
     "web-development",
     "cybersecurity",
@@ -35,7 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/courses`,
+      url: `${BASE_URL}/programs`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
@@ -72,8 +72,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const coursePages: MetadataRoute.Sitemap = courses.map((slug) => ({
-    url: `${BASE_URL}/courses/${slug}`,
+  const programPages: MetadataRoute.Sitemap = programs.map((slug) => ({
+    url: `${BASE_URL}/programs/${slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly",
     priority: 0.8,
@@ -86,5 +86,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...coursePages, ...blogPages];
+  return [...staticPages, ...programPages, ...blogPages];
 }

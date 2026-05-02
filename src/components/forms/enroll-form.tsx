@@ -30,21 +30,21 @@ interface FormData {
   email: string;
   linkedin: string;
   semester: string;
-  course: string;
+  program: string;
   reason: string;
   otherReason: string;
 }
 
 export function EnrollForm() {
   const searchParams = useSearchParams();
-  const [courses, setCourses] = useState<string[]>([]);
+  const [programs, setPrograms] = useState<string[]>([]);
   const [form, setForm] = useState<FormData>({
     fullName: "",
     contactNumber: "",
     email: "",
     linkedin: "",
     semester: "",
-    course: "",
+    program: "",
     reason: "",
     otherReason: "",
   });
@@ -58,10 +58,10 @@ export function EnrollForm() {
       .order("sort_order", { ascending: true })
       .then(({ data }) => {
         const titles = (data ?? []).map((c) => c.title);
-        setCourses(titles);
-        const courseParam = searchParams.get("course");
-        if (courseParam && titles.includes(courseParam)) {
-          setForm((p) => ({ ...p, course: courseParam }));
+        setPrograms(titles);
+        const programParam = searchParams.get("program");
+        if (programParam && titles.includes(programParam)) {
+          setForm((p) => ({ ...p, program: programParam }));
         }
       });
   }, [searchParams]);
@@ -78,11 +78,11 @@ export function EnrollForm() {
         : "Other (not specified)"
       : form.reason;
 
-  const emailBody = `Hello Leafclutch Team,\n\nMy name is ${form.fullName} and I would like to enroll in a training/internship program.\n\n--- Application Details ---\nFull Name: ${form.fullName}\nEmail: ${form.email}\nPhone: ${form.contactNumber}\nLinkedIn: ${form.linkedin || "Not provided"}\nSemester: ${form.semester}\nCourse Interested In: ${form.course}\nReason for Joining: ${finalReason}\n\nI look forward to hearing from you.\n\nSincerely,\n${form.fullName}`;
+  const emailBody = `Hello Leafclutch Team,\n\nMy name is ${form.fullName} and I would like to enroll in a training/internship program.\n\n--- Application Details ---\nFull Name: ${form.fullName}\nEmail: ${form.email}\nPhone: ${form.contactNumber}\nLinkedIn: ${form.linkedin || "Not provided"}\nSemester: ${form.semester}\nProgram Interested In: ${form.program}\nReason for Joining: ${finalReason}\n\nI look forward to hearing from you.\n\nSincerely,\n${form.fullName}`;
 
-  const waMessage = `*Enrollment Application*\n\nFull Name: ${form.fullName}\nEmail: ${form.email}\nPhone: ${form.contactNumber}\nLinkedIn: ${form.linkedin || "Not provided"}\nSemester: ${form.semester}\nCourse: ${form.course}\nReason: ${finalReason}`;
+  const waMessage = `*Enrollment Application*\n\nFull Name: ${form.fullName}\nEmail: ${form.email}\nPhone: ${form.contactNumber}\nLinkedIn: ${form.linkedin || "Not provided"}\nSemester: ${form.semester}\nProgram: ${form.program}\nReason: ${finalReason}`;
 
-  const gmailUrl = `https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to=${encodeURIComponent("hr@leafclutchtech.com.np")}&su=${encodeURIComponent(`Enrollment Application — ${form.course}`)}&body=${encodeURIComponent(emailBody)}`;
+  const gmailUrl = `https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to=${encodeURIComponent("hr@leafclutchtech.com.np")}&su=${encodeURIComponent(`Enrollment Application — ${form.program}`)}&body=${encodeURIComponent(emailBody)}`;
   const waUrl = `https://api.whatsapp.com/send/?phone=9779766715768&text=${encodeURIComponent(waMessage)}`;
 
   return (
@@ -201,23 +201,23 @@ export function EnrollForm() {
 
         <div className="mb-4">
           <label
-            htmlFor="enrollCourse"
+            htmlFor="enrollProgram"
             className="block text-[14px] font-semibold text-(--color-dark) mb-1.5"
           >
             Program You&apos;re Applying For{" "}
             <span className="text-red-500">*</span>
           </label>
           <select
-            id="enrollCourse"
+            id="enrollProgram"
             required
-            value={form.course}
-            onChange={(e) => setForm((p) => ({ ...p, course: e.target.value }))}
+            value={form.program}
+            onChange={(e) => setForm((p) => ({ ...p, program: e.target.value }))}
             className="w-full px-4 py-3 rounded-lg border border-(--color-border) text-[15px] focus:border-(--color-primary) focus:ring-2 focus:ring-(--color-primary)/20 outline-none transition-all"
           >
             <option value="" disabled>
               Select a program
             </option>
-            {courses.map((c) => (
+            {programs.map((c) => (
               <option key={c} value={c}>
                 {c}
               </option>

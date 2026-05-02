@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/lib/supabase/client";
-import type { Enrollment, Course } from "@/lib/supabase/types";
+import type { Enrollment, Program } from "@/lib/supabase/types";
 
 const statusConfig: Record<
   string,
@@ -160,7 +160,7 @@ function StatusModal({
 
 export default function AdminEnrollmentsPage() {
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
-  const [courses, setCourses] = useState<Record<string, string>>({});
+  const [programs, setPrograms] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
@@ -198,7 +198,7 @@ export default function AdminEnrollmentsPage() {
         (data ?? []).forEach((c: { id: string; title: string }) => {
           map[c.id] = c.title;
         });
-        setCourses(map);
+        setPrograms(map);
       });
   }, []);
 
@@ -250,7 +250,7 @@ export default function AdminEnrollmentsPage() {
     return (
       e.full_name.toLowerCase().includes(q) ||
       e.email.toLowerCase().includes(q) ||
-      (courses[e.course_id] ?? "").toLowerCase().includes(q)
+      (programs[e.course_id] ?? "").toLowerCase().includes(q)
     );
   });
 
@@ -310,7 +310,7 @@ export default function AdminEnrollmentsPage() {
             <i className="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-[12px] text-gray-400" />
             <input
               type="text"
-              placeholder="Search by name, email, or course..."
+              placeholder="Search by name, email, or program..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-9 pr-4 py-2 rounded-xl border border-(--color-border) text-[13px] w-[260px] focus:border-(--color-primary) focus:ring-2 focus:ring-(--color-primary)/10 outline-none transition-all"
@@ -410,7 +410,7 @@ export default function AdminEnrollmentsPage() {
                         <div className="flex items-center gap-3 text-[12px] text-(--color-text-light) mt-0.5">
                           <span>
                             <i className="fas fa-book-open mr-1" />{" "}
-                            {courses[enroll.course_id] ?? "Unknown Course"}
+                            {programs[enroll.course_id] ?? "Unknown Program"}
                           </span>
                           <span>
                             <i className="fas fa-clock mr-1" />{" "}
@@ -486,10 +486,10 @@ export default function AdminEnrollmentsPage() {
                         </div>
                         <div className="space-y-0.5">
                           <span className="text-[11px] text-(--color-text-light) font-medium uppercase tracking-wide">
-                            Course
+                            Program
                           </span>
                           <p className="text-[13px] text-(--color-dark) font-medium">
-                            {courses[enroll.course_id] ?? "Unknown"}
+                            {programs[enroll.course_id] ?? "Unknown"}
                           </p>
                         </div>
                         <div className="space-y-0.5">

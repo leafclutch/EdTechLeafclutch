@@ -3,7 +3,7 @@ const features = [
   { icon: "fas fa-project-diagram", title: "Hands-On Projects", desc: "Build and deploy real-world projects that strengthen your portfolio and practical skills." },
   { icon: "fas fa-certificate", title: "Industry Certification", desc: "Earn verified certificates recognized by employers across Nepal and beyond." },
   { icon: "fas fa-laptop-house", title: "Flexible Learning", desc: "On-site training in Bhairahawa/Butwal or join our online internship program from anywhere." },
-  { icon: "fas fa-sync-alt", title: "Up-to-Date Curriculum", desc: "Our courses are constantly updated to reflect the latest industry trends and technologies." },
+  { icon: "fas fa-sync-alt", title: "Up-to-Date Curriculum", desc: "Our programs are constantly updated to reflect the latest industry trends and technologies." },
   { icon: "fas fa-handshake", title: "Career & Networking", desc: "Get career guidance, mentorship, and access to our growing community of tech professionals." },
 ];
 

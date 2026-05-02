@@ -5,24 +5,25 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-const courseDropdown = [
-  { href: "/courses", label: "All Programs" },
-  { href: "/courses/ai-ml", label: "AI & Machine Learning" },
-  { href: "/courses/web-dev", label: "Web Development" },
-  { href: "/courses/cybersecurity", label: "Cybersecurity" },
-  { href: "/courses/ui-ux", label: "UI/UX Design" },
-  { href: "/courses/graphic-design", label: "Graphic Designing" },
-  { href: "/courses/data-science", label: "Data Science" },
+const programDropdown = [
+  { href: "/programs", label: "All Programs" },
+  { href: "/programs/ai-ml", label: "AI & Machine Learning" },
+  { href: "/programs/web-dev", label: "Web Development" },
+  { href: "/programs/cybersecurity", label: "Cybersecurity" },
+  { href: "/programs/ui-ux", label: "UI/UX Design" },
+  { href: "/programs/graphic-design", label: "Graphic Designing" },
+  { href: "/programs/data-science", label: "Data Science" },
 ];
 
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   {
-    href: "/courses",
+    href: "/programs",
     label: "Training & Internship",
-    dropdown: courseDropdown,
+    dropdown: programDropdown,
   },
+  { href: "/paid-internships", label: "Paid Internships" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];
@@ -103,8 +104,8 @@ export function Header() {
           <Link href="/contact" className="btn btn-login">
             Get in Touch
           </Link>
-          <Link href="/courses" className="btn btn-signup">
-            Explore Courses
+          <Link href="/programs" className="btn btn-signup">
+            Explore Programs
           </Link>
         </div>
 
@@ -208,14 +209,14 @@ export function Header() {
             Get in Touch
           </Link>
           <Link
-            href="/courses"
+            href="/programs"
             className="btn btn-primary btn-block"
             onClick={() => {
               setMobileOpen(false);
               setMobileDropdown(false);
             }}
           >
-            Explore Courses
+            Explore Programs
           </Link>
         </div>
       </div>

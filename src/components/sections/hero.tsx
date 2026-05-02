@@ -34,7 +34,7 @@ export async function HeroSection() {
             <h1 className="hero-title">{hero.title}</h1>
             <p className="hero-desc">{hero.description}</p>
             <div className="hero-buttons">
-              <Link href="/courses" className="btn btn-primary">
+              <Link href="/programs" className="btn btn-primary">
                 Explore Programs
               </Link>
               <Link href="/contact" className="btn btn-outline-dark">

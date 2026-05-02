@@ -285,11 +285,11 @@ export default function AdminTestimonialsPage() {
                 onChange={(e) =>
                   setForm((p) => ({ ...p, role: e.target.value }))
                 }
-                placeholder="e.g. AI/ML Course Graduate"
+                placeholder="e.g. AI/ML Program Graduate"
                 className="w-full px-3 py-2.5 rounded-xl border border-(--color-border) text-[13px] focus:border-(--color-primary) focus:ring-2 focus:ring-(--color-primary)/10 outline-none transition-all"
               />
               <p className="text-[11px] text-(--color-text-light) mt-1">
-                Their course or job title
+                Their program or job title
               </p>
             </div>
           </div>

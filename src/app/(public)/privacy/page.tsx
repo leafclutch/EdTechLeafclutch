@@ -47,7 +47,7 @@ export default function PrivacyPolicyPage() {
               <li>Phone number</li>
               <li>LinkedIn profile URL (optional)</li>
               <li>Current semester / educational status</li>
-              <li>Course preferences</li>
+              <li>Program preferences</li>
             </ul>
 
             <h3>Automatically Collected Information</h3>
