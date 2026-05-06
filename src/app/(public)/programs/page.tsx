@@ -51,8 +51,9 @@ export default async function ProgramsPage() {
             {(programs ?? []).map((program) => {
               const onlinePrice = program.price_online ?? program.price;
               const onsitePrice = program.price_onsite ?? program.price;
+              const hybridPrice = program.price_hybrid ?? null;
               const isPaid = program.program_type === "paid_internship";
-              const hasDualPrice = onlinePrice !== onsitePrice;
+              const hasDualPrice = onlinePrice !== onsitePrice || hybridPrice;
 
               return (
                 <div className="program-card" key={program.slug}>
@@ -86,6 +87,15 @@ export default async function ProgramsPage() {
                             <span className="mode-label"><i className="fas fa-building" /> On-Site</span>
                             <span className="mode-price">{formatNPR(onsitePrice)}</span>
                           </div>
+                          {hybridPrice && (
+                            <>
+                              <div className="program-pricing-divider" />
+                              <div className="program-pricing-mode">
+                                <span className="mode-label"><i className="fas fa-laptop-house" /> Hybrid</span>
+                                <span className="mode-price">{formatNPR(hybridPrice)}</span>
+                              </div>
+                            </>
+                          )}
                         </div>
                       ) : (
                         <div className="program-pricing-total">

@@ -6,7 +6,7 @@ import { PhoneInput } from "@/components/ui/phone-input";
 import { supabase } from "@/lib/supabase/client";
 
 type EnrollType = "training_internship" | "paid_internship";
-type DeliveryMode = "on-site" | "remote";
+type DeliveryMode = "on-site" | "remote" | "hybrid";
 
 function formatNPR(n: number) { return `NPR ${n.toLocaleString()}`; }
 
@@ -17,7 +17,7 @@ export function EnrollForm() {
   const [showOther, setShowOther] = useState(false);
   const [countryCode, setCountryCode] = useState("+977");
   const [status, setStatus] = useState<"idle" | "sending" | "success-email" | "success-whatsapp">("idle");
-  const [programs, setPrograms] = useState<{ id: string; title: string; price_online: number | null; price_onsite: number | null; price: number }[]>([]);
+  const [programs, setPrograms] = useState<{ id: string; title: string; price_online: number | null; price_onsite: number | null; price_hybrid: number | null; price: number }[]>([]);
   const [paidRoles, setPaidRoles] = useState<{ id: string; title: string; stipend: string }[]>([]);
 
   const [formData, setFormData] = useState({
@@ -38,7 +38,7 @@ export function EnrollForm() {
 
   // Load programs and paid roles from DB
   useEffect(() => {
-    supabase.from("courses").select("id,title,price,price_online,price_onsite").eq("is_published", true).order("sort_order").then(({ data }) => {
+    supabase.from("courses").select("id,title,price,price_online,price_onsite,price_hybrid").eq("is_published", true).order("sort_order").then(({ data }) => {
       setPrograms((data ?? []) as typeof programs);
     });
     supabase.from("paid_internships").select("id,title,stipend").eq("is_published", true).order("sort_order").then(({ data }) => {
@@ -49,7 +49,8 @@ export function EnrollForm() {
   const selectedProgram = programs.find(p => p.title === formData.program);
   const onlinePrice = selectedProgram?.price_online ?? selectedProgram?.price ?? null;
   const onsitePrice = selectedProgram?.price_onsite ?? selectedProgram?.price ?? null;
-  const currentPrice = deliveryMode === "on-site" ? onsitePrice : onlinePrice;
+  const hybridPrice = selectedProgram?.price_hybrid ?? null;
+  const currentPrice = deliveryMode === "on-site" ? onsitePrice : deliveryMode === "hybrid" ? hybridPrice : onlinePrice;
 
   function validate() {
     const base = formData.fullName && formData.email && formData.contactNumber && formData.semester;
@@ -64,8 +65,8 @@ export function EnrollForm() {
     if (enrollType === "training_internship") {
       return {
         subject: `Enrollment Application — ${formData.program}`,
-        email: `Hello Leafclutch Team,\n\nI would like to enroll in a Training & Internship program.\n\n--- Application ---\nFull Name: ${formData.fullName}\nEmail: ${formData.email}\nPhone: ${phone}\nLinkedIn: ${formData.linkedin || "Not provided"}\nSemester: ${formData.semester}\nProgram: ${formData.program}\nDelivery Mode: ${deliveryMode === "on-site" ? "On-site" : "Remote/Online"}${currentPrice ? `\nFee: ${formatNPR(currentPrice)}` : ""}\nReason: ${finalReason}\n\nSincerely,\n${formData.fullName}`,
-        whatsapp: `*Enrollment Application*\n\nFull Name: ${formData.fullName}\nEmail: ${formData.email}\nPhone: ${phone}\nProgram: ${formData.program}\nMode: ${deliveryMode === "on-site" ? "On-site" : "Remote"}${currentPrice ? `\nFee: ${formatNPR(currentPrice)}` : ""}\nSemester: ${formData.semester}\nReason: ${finalReason}`,
+        email: `Hello Leafclutch Team,\n\nI would like to enroll in a Training & Internship program.\n\n--- Application ---\nFull Name: ${formData.fullName}\nEmail: ${formData.email}\nPhone: ${phone}\nLinkedIn: ${formData.linkedin || "Not provided"}\nSemester: ${formData.semester}\nProgram: ${formData.program}\nDelivery Mode: ${deliveryMode === "on-site" ? "On-site" : deliveryMode === "hybrid" ? "Hybrid" : "Remote/Online"}${currentPrice ? `\nFee: ${formatNPR(currentPrice)}` : ""}\nReason: ${finalReason}\n\nSincerely,\n${formData.fullName}`,
+        whatsapp: `*Enrollment Application*\n\nFull Name: ${formData.fullName}\nEmail: ${formData.email}\nPhone: ${phone}\nProgram: ${formData.program}\nMode: ${deliveryMode === "on-site" ? "On-site" : deliveryMode === "hybrid" ? "Hybrid" : "Remote"}${currentPrice ? `\nFee: ${formatNPR(currentPrice)}` : ""}\nSemester: ${formData.semester}\nReason: ${finalReason}`,
       };
     } else {
       return {
@@ -217,6 +218,10 @@ export function EnrollForm() {
                 <button type="button" onClick={() => setDeliveryMode("remote")} className={`delivery-mode-btn ${deliveryMode === "remote" ? "delivery-mode-btn--active" : ""}`}>
                   <i className="fas fa-laptop" /> Remote / Online
                   {onlinePrice && <span className="delivery-price">{formatNPR(onlinePrice)}</span>}
+                </button>
+                <button type="button" onClick={() => setDeliveryMode("hybrid")} className={`delivery-mode-btn ${deliveryMode === "hybrid" ? "delivery-mode-btn--active" : ""}`}>
+                  <i className="fas fa-laptop-house" /> Hybrid
+                  {hybridPrice && <span className="delivery-price">{formatNPR(hybridPrice)}</span>}
                 </button>
               </div>
               {currentPrice && (

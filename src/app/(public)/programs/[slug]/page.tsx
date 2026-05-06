@@ -92,8 +92,9 @@ export default async function ProgramDetailPage({
   );
   const onlinePrice = program.price_online ?? program.price;
   const onsitePrice = program.price_onsite ?? program.price;
+  const hybridPrice = program.price_hybrid ?? null;
   const isPaid = program.program_type === "paid_internship";
-  const hasDualPrice = onlinePrice !== onsitePrice;
+  const hasDualPrice = onlinePrice !== onsitePrice || hybridPrice;
 
   return (
     <>
@@ -138,6 +139,15 @@ export default async function ProgramDetailPage({
                       <span className="price-mode-label"><i className="fas fa-building" /> On-Site</span>
                       <span className="price-mode-value">{formatNPR(onsitePrice)}</span>
                     </div>
+                    {hybridPrice && (
+                      <>
+                        <div className="price-mode-sep" />
+                        <div className="program-hero-price-mode">
+                          <span className="price-mode-label"><i className="fas fa-laptop-house" /> Hybrid</span>
+                          <span className="price-mode-value">{formatNPR(hybridPrice)}</span>
+                        </div>
+                      </>
+                    )}
                   </div>
                 ) : (
                   <div className="program-hero-price">

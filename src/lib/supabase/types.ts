@@ -38,6 +38,7 @@ export interface Database {
           is_published: boolean;
           price_online: number | null;
           price_onsite: number | null;
+          price_hybrid: number | null;
           program_type: string | null;
           created_at: string;
           updated_at: string;
@@ -70,6 +71,7 @@ export interface Database {
           is_published: boolean;
           price_online?: number | null;
           price_onsite?: number | null;
+          price_hybrid?: number | null;
           program_type?: string | null;
           created_at?: string;
           updated_at?: string;
@@ -102,6 +104,7 @@ export interface Database {
           is_published?: boolean;
           price_online?: number | null;
           price_onsite?: number | null;
+          price_hybrid?: number | null;
           program_type?: string | null;
           created_at?: string;
           updated_at?: string;

@@ -10,7 +10,7 @@ const defaultForm = {
   slug: "", title: "", short_title: "", description: "", hero_description: "",
   icon: "fas fa-code", badge: "", badge_color: "#1c46c8", image_url: "",
   duration: "3 Months", level: "Beginner to Advanced", mode: "On-Site",
-  price: 8000, initial_fee: 3000, price_online: 8000, price_onsite: 10000,
+  price: 8000, initial_fee: 3000, price_online: 8000, price_onsite: 10000, price_hybrid: 9000,
   program_type: "training_internship", features: "", udemy_url: "",
   udemy_title: "", udemy_instructor: "", sort_order: 0,
   is_featured: false, is_published: true, requirements: "", curriculum: "", learning_outcomes: "",
@@ -51,6 +51,7 @@ export default function ProgramEditorPage() {
           price: data.price ?? 8000, initial_fee: data.initial_fee ?? 3000,
           price_online: data.price_online ?? data.price ?? 8000,
           price_onsite: data.price_onsite ?? (data.price ? data.price + 2000 : 10000),
+          price_hybrid: data.price_hybrid ?? (data.price ? data.price + 1000 : 9000),
           program_type: data.program_type ?? "training_internship",
           features: Array.isArray(data.features) ? data.features.join("\n") : "",
           udemy_url: data.udemy_url ?? "", udemy_title: data.udemy_title ?? "",
@@ -81,6 +82,7 @@ export default function ProgramEditorPage() {
       image_url: form.image_url.trim(), duration: form.duration.trim(), level: form.level.trim(), mode: form.mode.trim(),
       price: Number(form.price), initial_fee: Number(form.initial_fee),
       price_online: Number(form.price_online), price_onsite: Number(form.price_onsite),
+      price_hybrid: form.price_hybrid ? Number(form.price_hybrid) : null,
       program_type: form.program_type,
       features: form.features.split("\n").map(s => s.trim()).filter(Boolean),
       requirements: requirements as Json,
@@ -214,7 +216,7 @@ export default function ProgramEditorPage() {
             <hr className="border-(--color-border)" />
             <div>
               <h3 className="font-heading text-[16px] font-bold text-(--color-dark) mb-3">Fee Structure</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
                 <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
                   <div className="flex items-center gap-2 mb-3"><i className="fas fa-laptop text-blue-600" /><span className="font-semibold text-[14px] text-blue-800">Online Mode</span></div>
                   <label className="block text-[13px] font-semibold text-(--color-dark) mb-1.5">Total Fee (NPR)</label>
@@ -224,6 +226,12 @@ export default function ProgramEditorPage() {
                   <div className="flex items-center gap-2 mb-3"><i className="fas fa-building text-indigo-600" /><span className="font-semibold text-[14px] text-indigo-800">On-Site Mode</span></div>
                   <label className="block text-[13px] font-semibold text-(--color-dark) mb-1.5">Total Fee (NPR)</label>
                   <input type="number" value={form.price_onsite} onChange={e => set("price_onsite", Number(e.target.value))} className={inp} min={0} />
+                </div>
+                <div className="bg-teal-50 border border-teal-200 rounded-xl p-4">
+                  <div className="flex items-center gap-2 mb-3"><i className="fas fa-laptop-house text-teal-600" /><span className="font-semibold text-[14px] text-teal-800">Hybrid Mode</span></div>
+                  <label className="block text-[13px] font-semibold text-(--color-dark) mb-1.5">Total Fee (NPR)</label>
+                  <input type="number" value={form.price_hybrid ?? ""} onChange={e => set("price_hybrid", e.target.value === "" ? 0 : Number(e.target.value))} className={inp} min={0} placeholder="Leave blank to hide" />
+                  <p className="text-[11px] text-teal-700 mt-1">Set to 0 or blank to hide</p>
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
