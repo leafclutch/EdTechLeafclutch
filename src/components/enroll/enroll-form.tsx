@@ -17,8 +17,8 @@ export function EnrollForm() {
   const [showOther, setShowOther] = useState(false);
   const [countryCode, setCountryCode] = useState("+977");
   const [status, setStatus] = useState<"idle" | "sending" | "success-email" | "success-whatsapp">("idle");
-  const [programs, setPrograms] = useState<{ id: string; title: string; price_online: number | null; price_onsite: number | null; price_hybrid: number | null; price: number }[]>([]);
-  const [paidRoles, setPaidRoles] = useState<{ id: string; title: string; stipend: string }[]>([]);
+  const [programs, setPrograms] = useState<{ id: string; title: string; price_online: number | null; price_onsite: number | null; price_hybrid: number | null; price: number; offer_label: string | null; offer_deadline: string | null; offer_discount_percent: number | null; offer_discount_flat: number | null }[]>([]);
+  const [paidRoles, setPaidRoles] = useState<{ id: string; title: string; stipend: string; offer_label: string | null; offer_deadline: string | null; offer_discount_percent: number | null; offer_discount_flat: number | null }[]>([]);
 
   const [formData, setFormData] = useState({
     fullName: "", contactNumber: "", email: "",
@@ -38,10 +38,10 @@ export function EnrollForm() {
 
   // Load programs and paid roles from DB
   useEffect(() => {
-    supabase.from("courses").select("id,title,price,price_online,price_onsite,price_hybrid").eq("is_published", true).order("sort_order").then(({ data }) => {
+    supabase.from("courses").select("id,title,price,price_online,price_onsite,price_hybrid,offer_label,offer_deadline,offer_discount_percent,offer_discount_flat").eq("is_published", true).order("sort_order").then(({ data }) => {
       setPrograms((data ?? []) as typeof programs);
     });
-    supabase.from("paid_internships").select("id,title,stipend").eq("is_published", true).order("sort_order").then(({ data }) => {
+    supabase.from("paid_internships").select("id,title,stipend,offer_label,offer_deadline,offer_discount_percent,offer_discount_flat").eq("is_published", true).order("sort_order").then(({ data }) => {
       setPaidRoles((data ?? []) as typeof paidRoles);
     });
   }, []);
@@ -51,6 +51,18 @@ export function EnrollForm() {
   const onsitePrice = selectedProgram?.price_onsite ?? selectedProgram?.price ?? null;
   const hybridPrice = selectedProgram?.price_hybrid ?? null;
   const currentPrice = deliveryMode === "on-site" ? onsitePrice : deliveryMode === "hybrid" ? hybridPrice : onlinePrice;
+
+  const selectedRole = paidRoles.find(r => r.title === formData.role);
+
+  function getActiveOffer(src: { offer_label: string | null; offer_deadline: string | null; offer_discount_percent: number | null; offer_discount_flat: number | null } | null | undefined) {
+    if (!src?.offer_label) return null;
+    if (src.offer_deadline && new Date(src.offer_deadline) < new Date()) return null;
+    return src;
+  }
+
+  const activeOffer = enrollType === "training_internship"
+    ? getActiveOffer(selectedProgram)
+    : getActiveOffer(selectedRole);
 
   function validate() {
     const base = formData.fullName && formData.email && formData.contactNumber && formData.semester;
@@ -205,6 +217,22 @@ export function EnrollForm() {
               </div>
             )}
           </div>
+
+          {/* Active Offer Banner */}
+          {activeOffer && (
+            <div className="offer-banner">
+              <div className="offer-banner-icon"><i className="fas fa-tag" /></div>
+              <div className="offer-banner-body">
+                <strong className="offer-banner-title">{activeOffer.offer_label}</strong>
+                <span className="offer-banner-details">
+                  {activeOffer.offer_discount_percent ? <span><i className="fas fa-percent" /> {activeOffer.offer_discount_percent}% off</span> : null}
+                  {activeOffer.offer_discount_percent && activeOffer.offer_discount_flat ? <span className="offer-sep"> · </span> : null}
+                  {activeOffer.offer_discount_flat ? <span><i className="fas fa-money-bill" /> NPR {activeOffer.offer_discount_flat.toLocaleString()} off</span> : null}
+                  {activeOffer.offer_deadline ? <span className="offer-deadline"> · Valid until {new Date(activeOffer.offer_deadline).toLocaleDateString("en-NP", { day: "numeric", month: "short", year: "numeric" })}</span> : null}
+                </span>
+              </div>
+            </div>
+          )}
 
           {/* Delivery Mode — only for Training */}
           {enrollType === "training_internship" && (

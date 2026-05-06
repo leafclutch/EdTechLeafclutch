@@ -2379,6 +2379,38 @@ a.footer-contact-item:hover {
   letter-spacing: 0.3px;
 }
 
+/* Offer badge on program card image */
+.program-offer-badge {
+  position: absolute; top: 12px; right: 12px;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff; font-size: 11px; font-weight: 700;
+  padding: 4px 10px; border-radius: 20px;
+  display: flex; align-items: center; gap: 5px;
+  letter-spacing: 0.3px; max-width: 140px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Offer strip inside pricing section */
+.program-offer-strip {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+  background: linear-gradient(135deg, #fffbeb, #fef3c7);
+  border: 1px solid #fbbf24; border-radius: 10px;
+  padding: 8px 12px; margin-top: 8px; font-size: 12px; color: #78350f;
+}
+.program-offer-strip i { color: #f59e0b; }
+.program-offer-strip strong { color: #92400e; font-weight: 700; }
+.program-offer-deadline { color: #b45309; font-weight: 600; }
+
+/* Offer strip on program hero (detail page) */
+.program-hero-offer {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+  background: linear-gradient(135deg, #fffbeb, #fef3c7);
+  border: 1.5px solid #fbbf24; border-radius: 14px;
+  padding: 12px 16px; margin-bottom: 8px; font-size: 13px; color: #78350f;
+}
+.program-hero-offer i { color: #f59e0b; font-size: 15px; }
+.program-hero-offer strong { background: #f59e0b; color: #fff; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+.program-hero-offer-deadline { color: #b45309; font-weight: 600; }
+
 /* Program type badge on detail hero */
 .program-hero-badges { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
 .program-type-badge {
@@ -2726,8 +2758,26 @@ a.footer-contact-item:hover {
   .enroll-trust-divider { width: 2px; height: 20px; margin: 0 22px; }
 }
 
+/* Offer Banner */
+.offer-banner {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: linear-gradient(135deg, #fffbeb, #fef3c7);
+  border: 1.5px solid #fbbf24; border-radius: 14px; padding: 14px 18px;
+  margin-bottom: 4px;
+}
+.offer-banner-icon {
+  width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
+  background: #f59e0b; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 15px;
+}
+.offer-banner-body { display: flex; flex-direction: column; gap: 4px; }
+.offer-banner-title { font-size: 14px; font-weight: 700; color: #92400e; }
+.offer-banner-details { font-size: 13px; color: #78350f; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.offer-banner-details i { font-size: 11px; }
+.offer-sep { color: #b45309; }
+.offer-deadline { color: #b45309; font-weight: 600; }
+
 /* Delivery Mode Toggle — premium */
-.delivery-mode-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.delivery-mode-selector { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 .delivery-mode-btn {
   display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px;
   padding: 18px 16px; border: 2px solid var(--border); border-radius: 16px;

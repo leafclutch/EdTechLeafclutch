@@ -23,6 +23,7 @@ const modeColors: Record<string, { bg: string; color: string; icon: string }> = 
 
 function RoleCard({ role }: { role: PaidInternship }) {
   const m = modeColors[role.mode] ?? modeColors["On-site"];
+  const hasActiveOffer = role.offer_label && (!role.offer_deadline || new Date(role.offer_deadline) >= new Date());
   return (
     <div className="pi-card">
       <div className="pi-card-accent" />
@@ -54,6 +55,16 @@ function RoleCard({ role }: { role: PaidInternship }) {
           <span className="pi-skill-more">+{(role.skills_required?.length ?? 0) - 4}</span>
         )}
       </div>
+      {/* Offer strip */}
+      {hasActiveOffer && (
+        <div className="program-offer-strip" style={{ marginTop: "10px" }}>
+          <i className="fas fa-fire" />
+          <span>{role.offer_label}</span>
+          {role.offer_discount_percent ? <strong>{role.offer_discount_percent}% off</strong> : null}
+          {role.offer_discount_flat ? <strong>NPR {role.offer_discount_flat.toLocaleString()} off</strong> : null}
+          {role.offer_deadline ? <span className="program-offer-deadline">· until {new Date(role.offer_deadline).toLocaleDateString("en-NP", { day: "numeric", month: "short" })}</span> : null}
+        </div>
+      )}
       {/* Actions */}
       <div className="pi-card-actions">
         <Link href={`/paid-internships/${role.slug}`} className="pi-btn pi-btn-outline">

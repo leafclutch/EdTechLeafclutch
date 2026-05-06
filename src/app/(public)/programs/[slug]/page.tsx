@@ -95,6 +95,7 @@ export default async function ProgramDetailPage({
   const hybridPrice = program.price_hybrid ?? null;
   const isPaid = program.program_type === "paid_internship";
   const hasDualPrice = onlinePrice !== onsitePrice || hybridPrice;
+  const hasActiveOffer = program.offer_label && (!program.offer_deadline || new Date(program.offer_deadline) >= new Date());
 
   return (
     <>
@@ -152,6 +153,15 @@ export default async function ProgramDetailPage({
                 ) : (
                   <div className="program-hero-price">
                     {formatNPR(onlinePrice)} <span>Total Fee</span>
+                  </div>
+                )}
+                {hasActiveOffer && (
+                  <div className="program-hero-offer">
+                    <i className="fas fa-fire" />
+                    <span>{program.offer_label}</span>
+                    {program.offer_discount_percent ? <strong>{program.offer_discount_percent}% off</strong> : null}
+                    {program.offer_discount_flat ? <strong>NPR {program.offer_discount_flat.toLocaleString()} off</strong> : null}
+                    {program.offer_deadline ? <span className="program-hero-offer-deadline">· Valid until {new Date(program.offer_deadline).toLocaleDateString("en-NP", { day: "numeric", month: "short", year: "numeric" })}</span> : null}
                   </div>
                 )}
                 <div className="program-hero-enroll-price">

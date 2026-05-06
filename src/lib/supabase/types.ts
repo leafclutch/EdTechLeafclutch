@@ -40,6 +40,10 @@ export interface Database {
           price_onsite: number | null;
           price_hybrid: number | null;
           program_type: string | null;
+          offer_label: string | null;
+          offer_deadline: string | null;
+          offer_discount_percent: number | null;
+          offer_discount_flat: number | null;
           created_at: string;
           updated_at: string;
         };
@@ -73,6 +77,10 @@ export interface Database {
           price_onsite?: number | null;
           price_hybrid?: number | null;
           program_type?: string | null;
+          offer_label?: string | null;
+          offer_deadline?: string | null;
+          offer_discount_percent?: number | null;
+          offer_discount_flat?: number | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -106,6 +114,10 @@ export interface Database {
           price_onsite?: number | null;
           price_hybrid?: number | null;
           program_type?: string | null;
+          offer_label?: string | null;
+          offer_deadline?: string | null;
+          offer_discount_percent?: number | null;
+          offer_discount_flat?: number | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -365,6 +377,10 @@ export interface Database {
           openings: number;
           is_published: boolean;
           sort_order: number;
+          offer_label: string | null;
+          offer_deadline: string | null;
+          offer_discount_percent: number | null;
+          offer_discount_flat: number | null;
           created_at: string;
           updated_at: string;
         };
@@ -381,6 +397,10 @@ export interface Database {
           openings?: number;
           is_published?: boolean;
           sort_order?: number;
+          offer_label?: string | null;
+          offer_deadline?: string | null;
+          offer_discount_percent?: number | null;
+          offer_discount_flat?: number | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -397,6 +417,10 @@ export interface Database {
           openings?: number;
           is_published?: boolean;
           sort_order?: number;
+          offer_label?: string | null;
+          offer_deadline?: string | null;
+          offer_discount_percent?: number | null;
+          offer_discount_flat?: number | null;
           created_at?: string;
           updated_at?: string;
         };

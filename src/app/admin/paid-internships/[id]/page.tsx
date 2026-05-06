@@ -10,6 +10,7 @@ const defaultForm = {
   duration: "2 Months", stipend: "NPR 5,000",
   mode: "On-site", requirements: "", skills_required: "",
   openings: 1, sort_order: 0, is_published: true,
+  offer_label: "", offer_deadline: "", offer_discount_percent: 0, offer_discount_flat: 0,
 };
 type FormState = typeof defaultForm;
 
@@ -45,6 +46,10 @@ export default function PaidInternshipEditorPage() {
           skills_required: (data.skills_required ?? []).join("\n"),
           openings: data.openings ?? 1, sort_order: data.sort_order ?? 0,
           is_published: data.is_published ?? true,
+          offer_label: data.offer_label ?? "",
+          offer_deadline: data.offer_deadline ?? "",
+          offer_discount_percent: data.offer_discount_percent ?? 0,
+          offer_discount_flat: data.offer_discount_flat ?? 0,
         });
         setLoading(false);
       });
@@ -62,6 +67,10 @@ export default function PaidInternshipEditorPage() {
       skills_required: form.skills_required.split("\n").map(s => s.trim()).filter(Boolean),
       openings: Number(form.openings), sort_order: Number(form.sort_order),
       is_published: form.is_published,
+      offer_label: form.offer_label.trim() || null,
+      offer_deadline: form.offer_deadline || null,
+      offer_discount_percent: form.offer_discount_percent ? Number(form.offer_discount_percent) : null,
+      offer_discount_flat: form.offer_discount_flat ? Number(form.offer_discount_flat) : null,
     };
     if (isNew) {
       const { error } = await supabase.from("paid_internships").insert(record);
@@ -163,6 +172,40 @@ export default function PaidInternshipEditorPage() {
               placeholder={"React\nTailwind CSS\nGit\nJavaScript"}
               className={`${inp} resize-y`} />
             <p className="text-[11px] text-(--color-text-light) mt-1">One skill per line — shown as tags</p>
+          </div>
+        </div>
+
+        {/* Offer / Discount */}
+        <div className="bg-white rounded-xl border border-(--color-border) p-6 space-y-5">
+          <div>
+            <h2 className="font-heading text-[16px] font-bold text-(--color-dark) mb-1">Offer / Discount</h2>
+            <p className="text-[12px] text-(--color-text-light) mb-4">Leave blank to show no offer. Offer hides automatically after the deadline.</p>
+          </div>
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-[13px] font-semibold text-(--color-dark) mb-1.5">Offer Label</label>
+                <input type="text" value={form.offer_label} onChange={e => set("offer_label", e.target.value)} placeholder="e.g. Early Bird Offer" className={inp} />
+                <p className="text-[11px] text-amber-700 mt-1">Shown as the offer headline</p>
+              </div>
+              <div>
+                <label className="block text-[13px] font-semibold text-(--color-dark) mb-1.5">Valid Until (Deadline)</label>
+                <input type="date" value={form.offer_deadline} onChange={e => set("offer_deadline", e.target.value)} className={inp} />
+                <p className="text-[11px] text-amber-700 mt-1">Offer hides after this date</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-[13px] font-semibold text-(--color-dark) mb-1.5">Discount % (Percentage)</label>
+                <input type="number" value={form.offer_discount_percent || ""} onChange={e => set("offer_discount_percent", e.target.value === "" ? 0 : Number(e.target.value))} placeholder="e.g. 20" className={inp} min={0} max={100} />
+                <p className="text-[11px] text-amber-700 mt-1">e.g. 20 = 20% off</p>
+              </div>
+              <div>
+                <label className="block text-[13px] font-semibold text-(--color-dark) mb-1.5">Discount Flat (NPR)</label>
+                <input type="number" value={form.offer_discount_flat || ""} onChange={e => set("offer_discount_flat", e.target.value === "" ? 0 : Number(e.target.value))} placeholder="e.g. 1500" className={inp} min={0} />
+                <p className="text-[11px] text-amber-700 mt-1">e.g. 1500 = NPR 1,500 off</p>
+              </div>
+            </div>
           </div>
         </div>
 

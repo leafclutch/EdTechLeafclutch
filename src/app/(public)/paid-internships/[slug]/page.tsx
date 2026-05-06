@@ -39,6 +39,7 @@ export default async function PaidInternshipDetailPage({ params }: Props) {
   if (!role) notFound();
 
   const mode = modeConfig[role.mode] ?? modeConfig["On-site"];
+  const hasActiveOffer = role.offer_label && (!role.offer_deadline || new Date(role.offer_deadline) >= new Date());
 
   return (
     <>
@@ -156,6 +157,17 @@ export default async function PaidInternshipDetailPage({ params }: Props) {
                     <strong style={{ color: "var(--dark)" }}>{role.openings}</strong>
                   </div>
                 </div>
+
+                {/* Offer strip */}
+                {hasActiveOffer && (
+                  <div style={{ margin: "0 24px 16px", background: "linear-gradient(135deg,#fffbeb,#fef3c7)", border: "1.5px solid #fbbf24", borderRadius: "12px", padding: "12px 16px", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px", fontSize: "13px", color: "#78350f" }}>
+                    <i className="fas fa-fire" style={{ color: "#f59e0b" }} />
+                    <span style={{ fontWeight: 700 }}>{role.offer_label}</span>
+                    {role.offer_discount_percent ? <span style={{ background: "#f59e0b", color: "#fff", borderRadius: "20px", padding: "2px 10px", fontSize: "12px", fontWeight: 700 }}>{role.offer_discount_percent}% off</span> : null}
+                    {role.offer_discount_flat ? <span style={{ background: "#f59e0b", color: "#fff", borderRadius: "20px", padding: "2px 10px", fontSize: "12px", fontWeight: 700 }}>NPR {role.offer_discount_flat.toLocaleString()} off</span> : null}
+                    {role.offer_deadline ? <span style={{ color: "#b45309", fontWeight: 600, fontSize: "12px" }}>· Valid until {new Date(role.offer_deadline).toLocaleDateString("en-NP", { day: "numeric", month: "short", year: "numeric" })}</span> : null}
+                  </div>
+                )}
 
                 {/* Apply button */}
                 <div style={{ padding: "0 24px 24px" }}>

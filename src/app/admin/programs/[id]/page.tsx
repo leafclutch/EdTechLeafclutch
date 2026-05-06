@@ -14,6 +14,7 @@ const defaultForm = {
   program_type: "training_internship", features: "", udemy_url: "",
   udemy_title: "", udemy_instructor: "", sort_order: 0,
   is_featured: false, is_published: true, requirements: "", curriculum: "", learning_outcomes: "",
+  offer_label: "", offer_deadline: "", offer_discount_percent: 0, offer_discount_flat: 0,
 };
 type FormState = typeof defaultForm;
 
@@ -52,6 +53,10 @@ export default function ProgramEditorPage() {
           price_online: data.price_online ?? data.price ?? 8000,
           price_onsite: data.price_onsite ?? (data.price ? data.price + 2000 : 10000),
           price_hybrid: data.price_hybrid ?? (data.price ? data.price + 1000 : 9000),
+          offer_label: data.offer_label ?? "",
+          offer_deadline: data.offer_deadline ?? "",
+          offer_discount_percent: data.offer_discount_percent ?? 0,
+          offer_discount_flat: data.offer_discount_flat ?? 0,
           program_type: data.program_type ?? "training_internship",
           features: Array.isArray(data.features) ? data.features.join("\n") : "",
           udemy_url: data.udemy_url ?? "", udemy_title: data.udemy_title ?? "",
@@ -83,6 +88,10 @@ export default function ProgramEditorPage() {
       price: Number(form.price), initial_fee: Number(form.initial_fee),
       price_online: Number(form.price_online), price_onsite: Number(form.price_onsite),
       price_hybrid: form.price_hybrid ? Number(form.price_hybrid) : null,
+      offer_label: form.offer_label.trim() || null,
+      offer_deadline: form.offer_deadline || null,
+      offer_discount_percent: form.offer_discount_percent ? Number(form.offer_discount_percent) : null,
+      offer_discount_flat: form.offer_discount_flat ? Number(form.offer_discount_flat) : null,
       program_type: form.program_type,
       features: form.features.split("\n").map(s => s.trim()).filter(Boolean),
       requirements: requirements as Json,
@@ -241,6 +250,37 @@ export default function ProgramEditorPage() {
                 <div><label className="block text-[13px] font-semibold text-(--color-dark) mb-1.5">Initial Enrollment Fee (NPR) <span className="text-red-500">*</span></label>
                   <input required type="number" value={form.initial_fee} onChange={e => set("initial_fee", Number(e.target.value))} className={inp} min={0} />
                   <p className="text-[11px] text-(--color-text-light) mt-1">Minimum to reserve a seat</p></div>
+              </div>
+            </div>
+            <hr className="border-(--color-border)" />
+            <div>
+              <h3 className="font-heading text-[16px] font-bold text-(--color-dark) mb-1">Offer / Discount</h3>
+              <p className="text-[12px] text-(--color-text-light) mb-4">Leave blank to show no offer. Offer hides automatically after the deadline.</p>
+              <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[13px] font-semibold text-(--color-dark) mb-1.5">Offer Label</label>
+                    <input type="text" value={form.offer_label} onChange={e => set("offer_label", e.target.value)} placeholder="e.g. Early Bird Offer" className={inp} />
+                    <p className="text-[11px] text-amber-700 mt-1">Shown as the offer headline</p>
+                  </div>
+                  <div>
+                    <label className="block text-[13px] font-semibold text-(--color-dark) mb-1.5">Valid Until (Deadline)</label>
+                    <input type="date" value={form.offer_deadline} onChange={e => set("offer_deadline", e.target.value)} className={inp} />
+                    <p className="text-[11px] text-amber-700 mt-1">Offer hides after this date</p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[13px] font-semibold text-(--color-dark) mb-1.5">Discount % (Percentage)</label>
+                    <input type="number" value={form.offer_discount_percent || ""} onChange={e => set("offer_discount_percent", e.target.value === "" ? 0 : Number(e.target.value))} placeholder="e.g. 20" className={inp} min={0} max={100} />
+                    <p className="text-[11px] text-amber-700 mt-1">e.g. 20 = 20% off</p>
+                  </div>
+                  <div>
+                    <label className="block text-[13px] font-semibold text-(--color-dark) mb-1.5">Discount Flat (NPR)</label>
+                    <input type="number" value={form.offer_discount_flat || ""} onChange={e => set("offer_discount_flat", e.target.value === "" ? 0 : Number(e.target.value))} placeholder="e.g. 1500" className={inp} min={0} />
+                    <p className="text-[11px] text-amber-700 mt-1">e.g. 1500 = NPR 1,500 off</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
