@@ -15,6 +15,7 @@ const defaultForm = {
   udemy_title: "", udemy_instructor: "", sort_order: 0,
   is_featured: false, is_published: true, requirements: "", curriculum: "", learning_outcomes: "",
   offer_label: "", offer_deadline: "", offer_discount_percent: 0, offer_discount_flat: 0,
+  syllabus_url: "",
 };
 type FormState = typeof defaultForm;
 
@@ -37,6 +38,7 @@ export default function ProgramEditorPage() {
   const [form, setForm] = useState<FormState>(defaultForm);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(!isNew);
+  const [uploading, setUploading] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
   const [tab, setTab] = useState<"basic" | "pricing" | "content" | "meta">("basic");
 
@@ -57,6 +59,7 @@ export default function ProgramEditorPage() {
           offer_deadline: data.offer_deadline ?? "",
           offer_discount_percent: data.offer_discount_percent ?? 0,
           offer_discount_flat: data.offer_discount_flat ?? 0,
+          syllabus_url: data.syllabus_url ?? "",
           program_type: data.program_type ?? "training_internship",
           features: Array.isArray(data.features) ? data.features.join("\n") : "",
           udemy_url: data.udemy_url ?? "", udemy_title: data.udemy_title ?? "",
@@ -72,6 +75,35 @@ export default function ProgramEditorPage() {
   }, [id, isNew]);
 
   function set(key: keyof FormState, val: FormState[keyof FormState]) { setForm(p => ({ ...p, [key]: val })); }
+
+  async function uploadSyllabus(file: File) {
+    if (!file || file.type !== "application/pdf") {
+      setToast({ message: "Please select a PDF file", type: "error" });
+      return;
+    }
+    setUploading(true);
+    const slug = form.slug.trim() || `program-${Date.now()}`;
+    const path = `${slug}.pdf`;
+    const { error: uploadError } = await supabase.storage
+      .from("syllabi")
+      .upload(path, file, { upsert: true, contentType: "application/pdf" });
+    if (uploadError) {
+      setToast({ message: `Upload failed: ${uploadError.message}`, type: "error" });
+      setUploading(false);
+      return;
+    }
+    const { data: { publicUrl } } = supabase.storage.from("syllabi").getPublicUrl(path);
+    set("syllabus_url", publicUrl);
+    setToast({ message: "Syllabus uploaded!", type: "success" });
+    setUploading(false);
+  }
+
+  async function removeSyllabus() {
+    if (!form.syllabus_url) return;
+    const slug = form.slug.trim() || `program-${Date.now()}`;
+    await supabase.storage.from("syllabi").remove([`${slug}.pdf`]);
+    set("syllabus_url", "");
+  }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault(); setSaving(true);
@@ -92,6 +124,7 @@ export default function ProgramEditorPage() {
       offer_deadline: form.offer_deadline || null,
       offer_discount_percent: form.offer_discount_percent ? Number(form.offer_discount_percent) : null,
       offer_discount_flat: form.offer_discount_flat ? Number(form.offer_discount_flat) : null,
+      syllabus_url: form.syllabus_url.trim() || null,
       program_type: form.program_type,
       features: form.features.split("\n").map(s => s.trim()).filter(Boolean),
       requirements: requirements as Json,
@@ -319,6 +352,33 @@ export default function ProgramEditorPage() {
             </div>
             <div><label className="block text-[13px] font-semibold text-(--color-dark) mb-1.5">Udemy URL</label>
               <input type="url" value={form.udemy_url} onChange={e => set("udemy_url", e.target.value)} placeholder="https://www.udemy.com/course/..." className={inp} /></div>
+            <hr className="border-(--color-border)" />
+            <h3 className="font-heading text-[15px] font-bold text-(--color-dark)">Syllabus PDF</h3>
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 space-y-3">
+              {form.syllabus_url ? (
+                <div className="flex items-center gap-3">
+                  <div className="flex-1 flex items-center gap-3 px-3 py-2.5 rounded-xl border border-blue-200 bg-white text-[13px] text-blue-800 font-medium overflow-hidden">
+                    <i className="fas fa-file-pdf text-red-500 text-[18px] flex-shrink-0" />
+                    <span className="truncate">Syllabus uploaded</span>
+                    <a href={form.syllabus_url} target="_blank" rel="noopener noreferrer" className="ml-auto text-blue-600 hover:text-blue-800 flex-shrink-0 text-[11px] font-semibold underline">Preview</a>
+                  </div>
+                  <button type="button" onClick={removeSyllabus} className="flex-shrink-0 px-3 py-2.5 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 text-[13px] font-semibold flex items-center gap-1.5">
+                    <i className="fas fa-trash text-[11px]" /> Remove
+                  </button>
+                </div>
+              ) : (
+                <p className="text-[12px] text-blue-700">No syllabus uploaded yet.</p>
+              )}
+              <label className={`flex items-center gap-3 cursor-pointer px-4 py-3 rounded-xl border-2 border-dashed ${uploading ? "border-blue-300 opacity-60" : "border-blue-300 hover:border-blue-500 hover:bg-blue-100/40"} transition-all`}>
+                <i className={`fas ${uploading ? "fa-spinner fa-spin" : "fa-cloud-upload-alt"} text-blue-500 text-[20px]`} />
+                <div>
+                  <div className="text-[13px] font-semibold text-blue-800">{uploading ? "Uploading…" : form.syllabus_url ? "Replace PDF" : "Upload Syllabus PDF"}</div>
+                  <div className="text-[11px] text-blue-600">PDF only · max 10 MB</div>
+                </div>
+                <input type="file" accept=".pdf,application/pdf" className="hidden" disabled={uploading}
+                  onChange={e => { const f = e.target.files?.[0]; if (f) uploadSyllabus(f); e.target.value = ""; }} />
+              </label>
+            </div>
             <hr className="border-(--color-border)" />
             <h3 className="font-heading text-[15px] font-bold text-(--color-dark)">Badge Color</h3>
             <div className="flex items-center gap-3">

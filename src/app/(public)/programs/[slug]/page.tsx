@@ -187,6 +187,17 @@ export default async function ProgramDetailPage({
                 >
                   <i className="fab fa-whatsapp"></i> Ask on WhatsApp
                 </a>
+                {program.syllabus_url && (
+                  <a
+                    href={program.syllabus_url}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-syllabus"
+                  >
+                    <i className="fas fa-file-pdf"></i> Download Syllabus
+                  </a>
+                )}
               </div>
             </div>
             <div className="program-hero-image">

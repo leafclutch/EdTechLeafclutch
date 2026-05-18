@@ -133,6 +133,11 @@ export default async function ProgramsPage() {
                         Enroll Now
                       </Link>
                     </div>
+                    {program.syllabus_url && (
+                      <a href={program.syllabus_url} download target="_blank" rel="noopener noreferrer" className="program-syllabus-btn">
+                        <i className="fas fa-file-pdf" /> Download Syllabus
+                      </a>
+                    )}
                   </div>
                 </div>
               );

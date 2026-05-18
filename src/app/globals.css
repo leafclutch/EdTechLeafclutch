@@ -135,6 +135,18 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--primary-very-light);
 }
 
+.btn-syllabus {
+  background: transparent;
+  color: #dc2626;
+  border: 2px solid #fca5a5;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-syllabus:hover {
+  background: #fff1f2;
+  border-color: #dc2626;
+  color: #b91c1c;
+}
+
 .btn-outline-primary {
   background: transparent;
   color: var(--primary);
@@ -2236,6 +2248,17 @@ a.footer-contact-item:hover {
 .program-pricing-total span { font-size: 13px; font-weight: 500; color: var(--text-light); margin-left: 4px; }
 .program-pricing-enroll { font-size: 14px; color: var(--text); margin-top: 4px; }
 .program-pricing-enroll strong { color: var(--green); font-weight: 700; }
+
+/* Syllabus download button on program cards */
+.program-syllabus-btn {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  width: 100%; margin-top: 8px; padding: 10px 16px; border-radius: 12px;
+  border: 1.5px dashed #fca5a5; background: #fff1f2;
+  color: #dc2626; font-size: 13px; font-weight: 600; text-decoration: none;
+  transition: all 0.2s ease;
+}
+.program-syllabus-btn:hover { background: #fee2e2; border-color: #dc2626; border-style: solid; }
+.program-syllabus-btn i { font-size: 15px; }
 
 /* Enroll Page */
 .enroll-section { padding: 64px 0 48px; }

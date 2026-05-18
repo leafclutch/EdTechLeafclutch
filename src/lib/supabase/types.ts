@@ -44,6 +44,7 @@ export interface Database {
           offer_deadline: string | null;
           offer_discount_percent: number | null;
           offer_discount_flat: number | null;
+          syllabus_url: string | null;
           created_at: string;
           updated_at: string;
         };
@@ -81,6 +82,7 @@ export interface Database {
           offer_deadline?: string | null;
           offer_discount_percent?: number | null;
           offer_discount_flat?: number | null;
+          syllabus_url?: string | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -118,6 +120,7 @@ export interface Database {
           offer_deadline?: string | null;
           offer_discount_percent?: number | null;
           offer_discount_flat?: number | null;
+          syllabus_url?: string | null;
           created_at?: string;
           updated_at?: string;
         };
