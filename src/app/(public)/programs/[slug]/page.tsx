@@ -188,13 +188,7 @@ export default async function ProgramDetailPage({
                   <i className="fab fa-whatsapp"></i> Ask on WhatsApp
                 </a>
                 {program.syllabus_url && (
-                  <a
-                    href={program.syllabus_url}
-                    download
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-syllabus"
-                  >
+                  <a href={`/programs/${program.slug}/syllabus`} className="btn btn-syllabus">
                     <i className="fas fa-file-pdf"></i> Download Syllabus
                   </a>
                 )}
@@ -255,6 +249,21 @@ export default async function ProgramDetailPage({
             <p className="section-desc">{program.description}</p>
           </div>
           <CurriculumAccordion sections={curriculum} />
+
+          {program.syllabus_url && (
+            <div className="syllabus-download-block">
+              <div className="syllabus-download-block-left">
+                <div className="syllabus-download-block-icon"><i className="fas fa-file-pdf" /></div>
+                <div>
+                  <div className="syllabus-download-block-title">Full Program Syllabus</div>
+                  <div className="syllabus-download-block-sub">Download the complete course outline as a PDF</div>
+                </div>
+              </div>
+              <a href={`/programs/${program.slug}/syllabus`} className="syllabus-download-block-btn">
+                <i className="fas fa-download" /> Download Syllabus
+              </a>
+            </div>
+          )}
 
           {/* Recommended Udemy Course */}
           {program.udemy_title && (

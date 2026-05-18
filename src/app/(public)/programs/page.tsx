@@ -134,7 +134,7 @@ export default async function ProgramsPage() {
                       </Link>
                     </div>
                     {program.syllabus_url && (
-                      <a href={program.syllabus_url} download target="_blank" rel="noopener noreferrer" className="program-syllabus-btn">
+                      <a href={`/programs/${program.slug}/syllabus`} className="program-syllabus-btn">
                         <i className="fas fa-file-pdf" /> Download Syllabus
                       </a>
                     )}
